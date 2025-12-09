@@ -31,7 +31,7 @@
             object-fit: contain;
             height: auto;
             width: 100%;
-            
+            max-height: 400px;
         }
         
         .post-create-section {
@@ -97,8 +97,15 @@
             90% { opacity: 1; transform: translateY(0); }
             100% { opacity: 0; transform: translateY(-10px); display: none; }
         }
-
+/* ეს სავარაუდოდ უნდა დაემატოს თქვენს Tailwind-ის კონფიგურაციას */
+/* ან გამოიყენოთ მორგებული CSS კლასი, თუ Tailwind-ის კლასები არ მუშაობს */
+.download-button-flex {
+    display: inline-flex;
+    align-items: center; /* ელემენტების ვერტიკალური გასწორება */
+    justify-content: center; /* ელემენტების ცენტრში განთავსება */
+}
     </style>
+    
 </head>
 
 <body class="bg-gray-50 text-gray-800 antialiased min-h-screen"> 
@@ -109,9 +116,15 @@
                     <span class="material-icons text-3xl text-red-500">local_fire_department</span>
                     კონეკტი
                 </h1>
-                <button onclick="logoutUser()" class="p-2 rounded-full hover:bg-gray-100 transition duration-300 hidden" id="logout-button">
-                    <span class="material-icons text-2xl text-gray-500">logout</span>
-                </button>
+                <div class="flex items-center space-x-2"> <!-- New wrapper for buttons -->
+                   <button onclick="toggleVideoOverlay()" class="p-2 rounded-full hover:bg-gray-100 transition duration-300 md:hidden flex items-center justify-center" id="add-to-screen-button" aria-label="APK ჩამოტვირთვა">
+    <span class="material-icons text-2xl text-indigo-500">file_download</span>
+    <span class="ml-1 text-indigo-500 font-semibold text-sm">APK</span>
+</button>
+                    <button onclick="logoutUser()" class="p-2 rounded-full hover:bg-gray-100 transition duration-300 hidden" id="logout-button" aria-label="გასვლა">
+                        <span class="material-icons text-2xl text-gray-500">logout</span>
+                    </button>
+                </div>
             </div>
             <div id="user-info-bar" class="text-sm text-gray-500 mt-2 hidden">
                 მოგესალმებით, <span id="user-email-display" class="font-bold text-indigo-600"></span>
@@ -201,6 +214,16 @@
         </nav>
     </div>
 
+    <!-- Video Overlay -->
+    <div id="video-overlay" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-[100] hidden p-4">
+        <button onclick="toggleVideoOverlay()" class="absolute top-4 right-4 text-white p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-white" aria-label="ვიდეოს დახურვა">
+            <span class="material-icons text-3xl">close</span>
+        </button>
+        <video id="fullscreen-video" src="inst.mp4" autoplay loop muted playsinline class="max-w-full max-h-full object-contain rounded-lg shadow-2xl border border-gray-700">
+            თქვენი ბრაუზერი არ უჭერს მხარს ვიდეო ტეგს.
+        </video>
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
@@ -232,6 +255,7 @@
         window.deletePost = deletePost; 
         window.submitComment = submitComment; 
         window.toggleComments = toggleComments; 
+        window.toggleVideoOverlay = toggleVideoOverlay; // Make the new function globally accessible
         
         const loadingMessage = document.getElementById('loading-message');
         const authSection = document.getElementById('auth-section');
@@ -250,6 +274,8 @@
         const userInfoBar = document.getElementById('user-info-bar'); 
         const bottomNavigation = document.getElementById('bottom-navigation');
         const logoutButton = document.getElementById('logout-button');
+        const videoOverlay = document.getElementById('video-overlay'); // New
+        const fullscreenVideo = document.getElementById('fullscreen-video'); // New
 
         let currentUser = null; 
         let currentSection = 'feed';
@@ -707,6 +733,29 @@
             });
         }
 
+        // New function for video overlay
+        function toggleVideoOverlay() {
+            if (videoOverlay.classList.contains('hidden')) {
+                videoOverlay.classList.remove('hidden');
+                if (fullscreenVideo) {
+                    fullscreenVideo.currentTime = 0; // Restart video
+                    fullscreenVideo.play().catch(error => {
+                        console.error("ვიდეოს ავტომატური გაშვება ვერ მოხერხდა:", error);
+                        // In case of autoplay policy restrictions, you might want to show a play button.
+                        // For now, we'll just log the error.
+                    });
+                }
+                // Disable scrolling on body when overlay is active
+                document.body.style.overflow = 'hidden';
+            } else {
+                videoOverlay.classList.add('hidden');
+                if (fullscreenVideo) {
+                    fullscreenVideo.pause();
+                }
+                // Re-enable scrolling
+                document.body.style.overflow = '';
+            }
+        }
     </script>
 </body>
 </html>
