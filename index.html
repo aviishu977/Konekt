@@ -29,7 +29,7 @@
         
         .post-image {
             object-fit: cover; 
-            max-height: 300px; 
+            height: auto;
             width: 100%;
             border-radius: 0.75rem; 
         }
@@ -1006,12 +1006,6 @@ let currentSection = 'feed';
     // 2. დაელოდეთ გვერდის სრულად ჩატვირთვას (რესურსების ჩათვლით)
     window.addEventListener("load", hidePreloader);
 
-    // უსაფრთხოების ქსელი: თუ რაიმე მიზეზით 'load' ივენთი არ მუშაობს,
-    // უბრალოდ დამალეთ DOM-ის ჩატვირთვის შემდეგ, მინიმალური დროის დაცვით.
-    // თუმცა, 'window.load' არის სწორი ადგილი.
-    // DOMContentLoaded-ის გააქტიურებისთანავე ვუშვებთ hidePreloader-ს
-    // იმ შემთხვევაში თუ load ივენთი უკვე შესრულდა (ნაკლებად სავარაუდოა),
-    // მაგრამ ძირითადი ლოგიკა window.load-ზეა.
     if (document.readyState === 'complete') {
         hidePreloader();
     }
