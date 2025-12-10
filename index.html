@@ -197,7 +197,7 @@
             <div id="loading-message" class="text-center text-gray-400 my-8 flex items-center justify-center gap-2">
                 <span class="material-icons animate-spin text-xl">sync</span> იტვირთება...
             </div>
-            <div id="error-display" class="hidden px-4 py-3 rounded-lg relative my-4 text-sm message-box" role="alert">
+            <div style="display: none;" id="error-display" class="hidden px-4 py-3 rounded-lg relative my-4 text-sm message-box" role="alert">
                 <span class="block sm:inline" id="error-text"></span>
             </div>
 
@@ -738,7 +738,7 @@ let currentSection = 'feed';
             onSnapshot(q, (snapshot) => {
                 commentsListElement.innerHTML = '';
                 if (snapshot.empty) {
-                    commentsListElement.innerHTML = '<p class="text-center text-gray-400 text-sm italic py-2">კომენტარები არ არის. იყავი პირველი!</p>';
+                    commentsListElement.innerHTML = '<p class="text-center text-gray-400 text-sm italic py-2">კომენტარები არ არის.</p>';
                     return;
                 }
                 
