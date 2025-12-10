@@ -48,27 +48,18 @@
             transition: max-height 0.4s ease-out, opacity 0.4s ease-out, padding 0.4s ease-out;
         }
 
+        /* Dark mode specific adjustments for app-container */
         .app-container {
             width: 100%;
             max-width: 768px;
             margin: 0 auto;
             min-height: 100vh;
-            background-color: white;
-            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            background-color: #1a1a1a; /* Darker background for app content */
+            box-shadow: 0 0 20px rgba(0,0,0,0.3); /* Darker shadow */
             display: flex;
             flex-direction: column;
         }
         
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            max-width: 768px;
-            margin: 0 auto;
-            z-index: 50;
-        }
-
         .fab {
             position: fixed;
             bottom: 72px;
@@ -111,153 +102,153 @@
             -ms-overflow-style: none;  /* IE and Edge */
             scrollbar-width: none;  /* Firefox */
         }
+        
         /* Custom CSS for Full Screen Modal and Transition Effect */
-/* Custom CSS for Full Screen Modal and Transition Effect (უცვლელია) */
-.full-screen-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.98); 
-    z-index: 1000;
-    overflow-y: auto;
-    display: none; 
+        .full-screen-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95); /* Darker overlay */
+            z-index: 1000;
+            overflow-y: auto;
+            display: none; 
 
-    transform: translateX(100%);
-    transition: transform 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53); 
-}
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53); 
+        }
 
-.full-screen-modal.is-open {
-    display: flex; 
-    transform: translateX(0); 
-}
+        .full-screen-modal.is-open {
+            display: flex; 
+            transform: translateX(0); 
+        }
 
-.modal-inner-content {
-    width: 100%;
-    min-height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    position: relative;
-}
+        .modal-inner-content {
+            width: 100%;
+            min-height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
 
-.close-modal-button {
-    position: fixed; 
-    top: 2rem;
-    right: 2rem;
-    background-color: #333;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
-    z-index: 1010;
-    transition: background-color 0.3s;
-}
+        .close-modal-button {
+            position: fixed; 
+            top: 2rem;
+            right: 2rem;
+            background-color: #333; /* Darker button */
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            z-index: 1010;
+            transition: background-color 0.3s;
+        }
 
-.close-modal-button:hover {
-    background-color: #e53e3e;
-}
+        .close-modal-button:hover {
+            background-color: #e53e3e; /* Red for close */
+        }
     </style>
     
 </head>
 
-<body class="bg-gray-50 text-gray-800 antialiased min-h-screen"> 
+<body class="bg-zinc-950 text-gray-100 antialiased min-h-screen"> 
     <div class="app-container">
-        <header class="sticky top-0 bg-white p-4 border-b border-gray-100 shadow-sm z-40">
+        <header class="sticky top-0 bg-zinc-900 p-4 border-b border-zinc-800 shadow-lg z-40">
             <div class="flex items-center justify-between">
-                <h1 class="text-2xl font-extrabold text-indigo-700 flex items-center gap-1">
-                    <span class="material-icons text-3xl text-red-500">local_fire_department</span>
+                <h1 class="text-2xl font-extrabold text-indigo-400 flex items-center gap-1">
+                    <span class="material-icons text-3xl text-red-400">local_fire_department</span>
                     კონეკტი
                 </h1>
                 <div class="flex items-center space-x-2">
-                   <button onclick="toggleVideoOverlay()" class="p-2 rounded-full hover:bg-gray-100 transition duration-300 md:hidden flex items-center justify-center" id="add-to-screen-button" aria-label="APK ჩამოტვირთვა">
-    <span class="material-icons text-2xl text-indigo-500">file_download</span>
-    <span class="ml-1 text-indigo-500 font-semibold text-sm">APK</span>
-</button>
-                    <button onclick="logoutUser()" class="p-2 rounded-full hover:bg-gray-100 transition duration-300 hidden" id="logout-button" aria-label="გასვლა">
-                        <span class="material-icons text-2xl text-gray-500">logout</span>
+                   <button onclick="toggleVideoOverlay()" class="p-2 rounded-full hover:bg-zinc-800 transition duration-300 md:hidden flex items-center justify-center" id="add-to-screen-button" aria-label="APK ჩამოტვირთვა">
+                        <span class="material-icons text-2xl text-indigo-400">file_download</span>
+                        <span class="ml-1 text-indigo-400 font-semibold text-sm">APK</span>
+                    </button>
+                    <button onclick="logoutUser()" class="p-2 rounded-full hover:bg-zinc-800 transition duration-300 hidden" id="logout-button" aria-label="გასვლა">
+                        <span class="material-icons text-2xl text-gray-400">logout</span>
                     </button>
                 </div>
             </div>
-            <div id="user-info-bar" class="text-sm text-gray-500 mt-2 hidden">
-                მოგესალმებით, <span id="user-email-display" class="font-bold text-indigo-600"></span>
+            <div id="user-info-bar" class="text-sm text-gray-400 mt-2 hidden">
+                მოგესალმებით, <span id="user-email-display" class="font-bold text-indigo-400"></span>
             </div>
         </header>
 
         <!-- New Scrollable App-Style Navbar -->
-        <nav id="scrollable-navbar" class="bg-white px-4 py-2 border-b border-gray-100 shadow-sm sticky top-[64px] z-30 w-full">
-    <div class="flex overflow-x-auto whitespace-nowrap scrollbar-hide space-x-3">
-        
-        <button id="feed-btn" onclick="showSection('feed')" class="flex items-center px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ease-in-out flex-shrink-0 text-indigo-600 bg-indigo-50">
-            <span>პოსტები</span>
+        <nav id="scrollable-navbar" class="bg-zinc-900 px-4 py-2 border-b border-zinc-800 shadow-lg sticky top-[64px] z-30 w-full">
+            <div class="flex overflow-x-auto whitespace-nowrap scrollbar-hide space-x-3">
+                
+                <button id="feed-btn" onclick="showSection('feed')" class="flex items-center px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ease-in-out flex-shrink-0 text-indigo-400 bg-indigo-900/40">
+                    <span>პოსტები</span>
+                </button>
+                
+                <a href="https://egreve.bog.ge/G10o" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="flex items-center px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ease-in-out flex-shrink-0 text-gray-400 hover:bg-zinc-800">
+                    <span>დონაცია</span>
+                </a>
+                
+                <a href="mailto:geo.konekti.official@gmail.com" 
+                   target="_blank" 
+                   class="flex items-center px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ease-in-out flex-shrink-0 text-gray-400 hover:bg-zinc-800">
+                    <span>რეპორტი</span>
+                </a>
+                <button 
+            onclick="openContactModal()" 
+            class="flex items-center px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ease-in-out flex-shrink-0 text-gray-400 hover:bg-zinc-800"
+        >
+            <span>კონტაქტი</span>
         </button>
-        
-        <a href="https://egreve.bog.ge/G10o" 
-           target="_blank" 
-           rel="noopener noreferrer"
-           class="flex items-center px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ease-in-out flex-shrink-0 text-gray-500 hover:bg-gray-100">
-            <span>დონაცია</span>
-        </a>
-        
-        <a href="mailto:geo.konekti.official@gmail.com" 
-           target="_blank" 
-           class="flex items-center px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ease-in-out flex-shrink-0 text-gray-500 hover:bg-gray-100">
-            <span>რეპორტი</span>
-        </a>
-        <button 
-    onclick="openContactModal()" 
-    class="flex items-center px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ease-in-out flex-shrink-0 text-gray-500 hover:bg-gray-100"
->
-    <span>კონტაქტი</span>
-</button>
-        
-    </div>
-</nav>
+                
+            </div>
+        </nav>
         
         <main class="flex-grow p-4 pb-20 overflow-y-auto"> 
-            <div id="loading-message" class="text-center text-gray-500 my-8 flex items-center justify-center gap-2">
+            <div id="loading-message" class="text-center text-gray-400 my-8 flex items-center justify-center gap-2">
                 <span class="material-icons animate-spin text-xl">sync</span> იტვირთება...
             </div>
             <div id="error-display" class="hidden px-4 py-3 rounded-lg relative my-4 text-sm message-box" role="alert">
                 <span class="block sm:inline" id="error-text"></span>
             </div>
 
-            <section id="auth-section" class="hidden pt-10 px-4 md:px-8 bg-gradient-to-br from-indigo-50 to-blue-50 rounded-xl shadow-lg">
-                <h2 class="text-3xl font-extrabold text-center text-indigo-800 mb-8 mt-4">შემოუერთდი კონეკტს!</h2>
-                <input type="email" id="email" placeholder="ელ-ფოსტა" required class="w-full px-4 py-3 mb-4 border border-indigo-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-base shadow-sm">
-                <input type="password" id="password" placeholder="პაროლი" required class="w-full px-4 py-3 mb-6 border border-indigo-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-base shadow-sm">
+            <section id="auth-section" class="hidden pt-10 px-4 md:px-8 bg-zinc-800 rounded-xl shadow-lg border border-zinc-700">
+                <h2 class="text-3xl font-extrabold text-center text-indigo-400 mb-8 mt-4">შემოუერთდი კონეკტს!</h2>
+                <input type="email" id="email" placeholder="ელ-ფოსტა" required class="w-full px-4 py-3 mb-4 border border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-zinc-700 text-gray-100 placeholder-gray-400 text-base shadow-sm">
+                <input type="password" id="password" placeholder="პაროლი" required class="w-full px-4 py-3 mb-6 border border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-zinc-700 text-gray-100 placeholder-gray-400 text-base shadow-sm">
                 
                 <button onclick="loginUser()" class="w-full bg-indigo-600 text-white py-3 px-4 rounded-xl font-semibold hover:bg-indigo-700 active:bg-indigo-800 transition duration-300 ease-in-out mb-3 flex items-center justify-center gap-2 text-lg shadow-md">
                     <span class="material-icons">login</span> ავტორიზაცია
                 </button>
-                <div class="text-center text-gray-500 my-4 flex items-center justify-center">
-                    <span class="flex-grow border-t border-gray-300"></span>
+                <div class="text-center text-gray-400 my-4 flex items-center justify-center">
+                    <span class="flex-grow border-t border-zinc-700"></span>
                     <span class="mx-4 text-sm">ან</span>
-                    <span class="flex-grow border-t border-gray-300"></span>
+                    <span class="flex-grow border-t border-zinc-700"></span>
                 </div>
-                <button onclick="registerUser()" class="w-full bg-green-500 text-white py-3 px-4 rounded-xl font-semibold hover:bg-green-600 active:bg-green-700 transition duration-300 ease-in-out flex items-center justify-center gap-2 text-lg shadow-md mb-4">
+                <button onclick="registerUser()" class="w-full bg-green-600 text-white py-3 px-4 rounded-xl font-semibold hover:bg-green-700 active:bg-green-800 transition duration-300 ease-in-out flex items-center justify-center gap-2 text-lg shadow-md mb-4">
                     <span class="material-icons">person_add</span> რეგისტრაცია
                 </button>
             </section>
 
             <section id="main-app" class="hidden">
-                <div id="post-creator-section" class="post-create-section bg-white rounded-xl shadow-lg mb-6 border border-indigo-200">
-                    <h3 class="text-xl font-bold text-gray-700 mb-4 flex items-center gap-2 border-b pb-2 text-indigo-700">
-                        <span class="material-icons text-indigo-600">edit_note</span> შექმენი ახალი პოსტი
+                <div id="post-creator-section" class="post-create-section bg-zinc-800 rounded-xl shadow-lg mb-6 border border-zinc-700">
+                    <h3 class="text-xl font-bold text-indigo-400 mb-4 flex items-center gap-2 border-b border-zinc-700 pb-2">
+                        <span class="material-icons text-indigo-500">edit_note</span> შექმენი ახალი პოსტი
                     </h3>
-                    <input type="text" id="post-title" placeholder="სათაური (არასავალდებულო)" class="w-full px-3 py-2 mb-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 text-base">
-                    <textarea id="post-text" placeholder="რას ფიქრობ დღეს? გაგვიზიარე შენი იდეები..." rows="3" class="w-full px-3 py-2 mb-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 resize-y text-base"></textarea>
+                    <input type="text" id="post-title" placeholder="სათაური (არასავალდებულო)" class="w-full px-3 py-2 mb-3 border border-zinc-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-zinc-700 text-gray-100 placeholder-gray-400 text-base">
+                    <textarea id="post-text" placeholder="რას ფიქრობ დღეს? გაგვიზიარე შენი იდეები..." rows="3" class="w-full px-3 py-2 mb-3 border border-zinc-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 resize-y bg-zinc-700 text-gray-100 placeholder-gray-400 text-base"></textarea>
                     
                     <div class="mb-4">
                         <input type="file" id="post-image" accept="image/*" class="hidden">
                         
-                        <label for="post-image" class="cursor-pointer bg-blue-100 text-blue-700 py-2 px-4 rounded-lg font-semibold hover:bg-blue-200 transition duration-300 ease-in-out flex items-center justify-center gap-2 text-base shadow-sm">
+                        <label for="post-image" class="cursor-pointer bg-blue-900/40 text-blue-300 py-2 px-4 rounded-lg font-semibold hover:bg-blue-900/60 transition duration-300 ease-in-out flex items-center justify-center gap-2 text-base shadow-sm">
                             <span class="material-icons text-xl">add_photo_alternate</span> 
                             ფოტოს დამატება
                         </label>
@@ -268,20 +259,20 @@
                 </div>
                 
                 <div id="feed-section">
-                    <h2 class="text-xl font-bold text-gray-700 mb-4 flex items-center gap-2 text-indigo-700">
-                        <span class="material-icons text-indigo-600">article</span> უახლესი პოსტები
+                    <h2 class="text-xl font-bold text-indigo-400 mb-4 flex items-center gap-2">
+                        <span class="material-icons text-indigo-500">article</span> უახლესი პოსტები
                     </h2>
                     <div id="posts-container" class="space-y-4">
-                        <p class="text-center text-gray-500 py-8 text-lg italic">პოსტები არ არის. იყავი პირველი!</p>
+                        <p class="text-center text-gray-400 py-8 text-lg italic">პოსტები არ არის. იყავი პირველი!</p>
                     </div>
                 </div>
 
                 <div id="profile-section" class="hidden">
-                    <h2 class="text-xl font-bold text-gray-700 mb-4 flex items-center gap-2 text-indigo-700">
-                        <span class="material-icons text-indigo-600">account_box</span> ჩემი პოსტები
+                    <h2 class="text-xl font-bold text-indigo-400 mb-4 flex items-center gap-2">
+                        <span class="material-icons text-indigo-500">account_box</span> ჩემი პოსტები
                     </h2>
                     <div id="my-posts-container" class="space-y-4">
-                        <p class="text-center text-gray-500 py-8 text-lg italic">თქვენი პოსტები აქ გამოჩნდება.</p>
+                        <p class="text-center text-gray-400 py-8 text-lg italic">თქვენი პოსტები აქ გამოჩნდება.</p>
                     </div>
                 </div>
             </section>
@@ -294,74 +285,74 @@
 
     <!-- Video Overlay -->
     <div id="video-overlay" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-[100] hidden p-4">
-        <button onclick="toggleVideoOverlay()" class="absolute top-4 right-4 text-white p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-white" aria-label="ვიდეოს დახურვა">
+        <button onclick="toggleVideoOverlay()" class="absolute top-4 right-4 text-white p-2 rounded-full bg-zinc-800 hover:bg-zinc-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-white" aria-label="ვიდეოს დახურვა">
             <span class="material-icons text-3xl">close</span>
         </button>
-        <video id="fullscreen-video" src="inst.mp4" autoplay loop muted playsinline class="max-w-full max-h-full object-contain rounded-lg shadow-2xl border border-gray-700">
+        <video id="fullscreen-video" src="inst.mp4" autoplay loop muted playsinline class="max-w-full max-h-full object-contain rounded-lg shadow-2xl border border-zinc-700">
             თქვენი ბრაუზერი არ უჭერს მხარს ვიდეო ტეგს.
         </video>
     </div>
-<div id="contact-modal" class="full-screen-modal">
-    <div class="modal-inner-content">
-        <button onclick="closeContactModal()" class="close-modal-button" aria-label="დახურვა">
-            <span class="material-icons text-white text-3xl">close</span>
-        </button>
-        
-        <div class="contact-card bg-white p-8 md:p-12 rounded-2xl shadow-2xl max-w-lg w-full transform transition duration-500 ease-out">
+    <div id="contact-modal" class="full-screen-modal">
+        <div class="modal-inner-content">
+            <button onclick="closeContactModal()" class="close-modal-button" aria-label="დახურვა">
+                <span class="material-icons text-white text-3xl">close</span>
+            </button>
             
-            <div class="text-center mb-8">
+            <div class="contact-card bg-zinc-800 p-8 md:p-12 rounded-2xl shadow-2xl max-w-lg w-full transform transition duration-500 ease-out border border-zinc-700">
                 
-                <div class="w-28 h-28 mx-auto mb-4 rounded-full overflow-hidden border-4 border-indigo-200 shadow-md">
-                    <img src="Screenshot_20251210_031235_Gallery.png" alt="დამფუძნებლის ფოტო" class="w-full h-full object-cover">
+                <div class="text-center mb-8">
+                    
+                    <div class="w-28 h-28 mx-auto mb-4 rounded-full overflow-hidden border-4 border-indigo-700 shadow-md">
+                        <img src="Screenshot_20251210_031235_Gallery.png" alt="დამფუძნებლის ფოტო" class="w-full h-full object-cover">
+                    </div>
+                    
+                    <h2 class="text-3xl font-extrabold text-indigo-400">გიორგი ნადაშვილი</h2>
+                    <p class="text-lg text-gray-300 mt-1 flex items-center justify-center gap-1">
+                        <span class="material-icons text-base text-gray-400">verified_user</span>
+                        პროექტის დამფუძნებელი
+                    </p>
                 </div>
-                
-                <h2 class="text-3xl font-extrabold text-indigo-800">გიორგი ნადაშვილი</h2>
-                <p class="text-lg text-gray-600 mt-1 flex items-center justify-center gap-1">
-                    <span class="material-icons text-base text-gray-500">verified_user</span>
-                    პროექტის დამფუძნებელი
-                </p>
-            </div>
 
-            <h3 class="text-xl font-bold text-gray-700 mb-4 pb-2 border-b border-gray-200 text-center">
-                დაგვიკავშირდით
-            </h3>
-            
-            <ul class="space-y-4 text-left">
-                <li class="flex items-center text-gray-700 p-2 rounded-lg bg-gray-50 hover:bg-indigo-100 transition duration-200 shadow-sm">
-                    <span class="material-icons text-2xl mr-3 text-blue-500">mail</span>
-                    <div class="flex flex-col">
-                        <span class="font-semibold text-sm text-blue-500">ელფოსტა</span>
-                        <a href="mailto:nadashviligio707@gmail.com" class="text-base text-indigo-700 hover:text-indigo-900 font-medium">nadashviligio707@gmail.com</a>
-                    </div>
-                </li>
+                <h3 class="text-xl font-bold text-gray-100 mb-4 pb-2 border-b border-zinc-700 text-center">
+                    დაგვიკავშირდით
+                </h3>
                 
-                <li class="flex items-center text-gray-700 p-2 rounded-lg bg-gray-50 hover:bg-indigo-100 transition duration-200 shadow-sm">
-                    <span class="material-icons text-2xl mr-3 text-blue-600">tag</span> 
-                    <div class="flex flex-col">
-                        <span class="font-semibold text-sm text-blue-500">Instagram</span>
-                        <a href="https://www.instagram.com/gio.nadashvili?igsh=dXEyaTg1OG91cjJl" target="_blank" rel="noopener noreferrer" class="text-base text-indigo-700 hover:text-indigo-900 font-medium">@gio.nadashvili</a>
-                    </div>
-                </li>
-                
-                <li class="flex items-center text-blue-700 p-2 rounded-lg bg-gray-50 hover:bg-indigo-100 transition duration-200 shadow-sm">
-                    <span class="material-icons text-2xl mr-3 text-blue">music_note</span>
-                    <div class="flex flex-col">
-                        <span class="font-semibold text-sm text-blue-500">TikTok</span>
-                        <a href="https://www.tiktok.com/@character_009?_r=1&_t=ZS-925eEYNcjem" target="_blank" rel="noopener noreferrer" class="text-base text-indigo-700 hover:text-indigo-900 font-medium">@cheracter_009</a>
-                    </div>
-                </li>
-                
-                <li class="flex items-center text-gray-700 p-2 rounded-lg bg-gray-50 hover:bg-indigo-100 transition duration-200 shadow-sm">
-                    <span class="material-icons text-2xl mr-3 text-blue-600">phone_in_talk</span>
-                    <div class="flex flex-col">
-                        <span class="font-semibold text-sm text-blue-500">WhatsApp</span>
-                        <a href="https://wa.me/598893999" target="_blank" rel="noopener noreferrer" class="text-base text-indigo-700 hover:text-indigo-900 font-medium">+995 598 893 999</a>
-                    </div>
-                </li>
-            </ul>
+                <ul class="space-y-4 text-left">
+                    <li class="flex items-center text-gray-100 p-2 rounded-lg bg-zinc-700 hover:bg-indigo-900/30 transition duration-200 shadow-sm">
+                        <span class="material-icons text-2xl mr-3 text-blue-400">mail</span>
+                        <div class="flex flex-col">
+                            <span class="font-semibold text-sm text-blue-400">ელფოსტა</span>
+                            <a href="mailto:nadashviligio707@gmail.com" class="text-base text-indigo-300 hover:text-indigo-100 font-medium">nadashviligio707@gmail.com</a>
+                        </div>
+                    </li>
+                    
+                    <li class="flex items-center text-gray-100 p-2 rounded-lg bg-zinc-700 hover:bg-indigo-900/30 transition duration-200 shadow-sm">
+                        <span class="material-icons text-2xl mr-3 text-blue-500">tag</span> 
+                        <div class="flex flex-col">
+                            <span class="font-semibold text-sm text-blue-400">Instagram</span>
+                            <a href="https://www.instagram.com/gio.nadashvili?igsh=dXEyaTg1OG91cjJl" target="_blank" rel="noopener noreferrer" class="text-base text-indigo-300 hover:text-indigo-100 font-medium">@gio.nadashvili</a>
+                        </div>
+                    </li>
+                    
+                    <li class="flex items-center text-gray-100 p-2 rounded-lg bg-zinc-700 hover:bg-indigo-900/30 transition duration-200 shadow-sm">
+                        <span class="material-icons text-2xl mr-3 text-blue-500">music_note</span>
+                        <div class="flex flex-col">
+                            <span class="font-semibold text-sm text-blue-400">TikTok</span>
+                            <a href="https://www.tiktok.com/@character_009?_r=1&_t=ZS-925eEYNcjem" target="_blank" rel="noopener noreferrer" class="text-base text-indigo-300 hover:text-indigo-100 font-medium">@cheracter_009</a>
+                        </div>
+                    </li>
+                    
+                    <li class="flex items-center text-gray-100 p-2 rounded-lg bg-zinc-700 hover:bg-indigo-900/30 transition duration-200 shadow-sm">
+                        <span class="material-icons text-2xl mr-3 text-blue-500">phone_in_talk</span>
+                        <div class="flex flex-col">
+                            <span class="font-semibold text-sm text-blue-400">WhatsApp</span>
+                            <a href="https://wa.me/598893999" target="_blank" rel="noopener noreferrer" class="text-base text-indigo-300 hover:text-indigo-100 font-medium">+995 598 893 999</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
@@ -407,10 +398,8 @@
         const feedSection = document.getElementById('feed-section');
         const profileSection = document.getElementById('profile-section');
         const feedBtn = document.getElementById('feed-btn'); // Get the button from the new navbar
-        const profileBtn = document.getElementById('profile-btn'); // Get the button from the new navbar
         const togglePostBtn = document.getElementById('toggle-post-btn');
         const userInfoBar = document.getElementById('user-info-bar'); 
-        // const bottomNavigation = document.getElementById('bottom-navigation'); // Removed as it's not present in HTML
         const logoutButton = document.getElementById('logout-button');
         const videoOverlay = document.getElementById('video-overlay'); 
         const fullscreenVideo = document.getElementById('fullscreen-video'); 
@@ -422,13 +411,13 @@
 
         function displayMessage(message, type = 'success') {
             errorText.textContent = message;
-            errorDisplay.classList.remove('hidden', 'bg-red-50', 'border-red-300', 'text-red-700', 'bg-green-50', 'border-green-300', 'text-green-700');
+            errorDisplay.classList.remove('hidden', 'bg-red-900/30', 'border-red-700', 'text-red-300', 'bg-green-900/30', 'border-green-700', 'text-green-300'); // Adjust classes for dark mode
             errorDisplay.classList.remove('message-box');
 
             if (type === 'error') {
-                errorDisplay.classList.add('bg-red-50', 'border-red-300', 'text-red-700');
+                errorDisplay.classList.add('bg-red-900/30', 'border-red-700', 'text-red-300');
             } else {
-                errorDisplay.classList.add('bg-green-50', 'border-green-300', 'text-green-700');
+                errorDisplay.classList.add('bg-green-900/30', 'border-green-700', 'text-green-300');
             }
             
             void errorDisplay.offsetWidth;
@@ -448,7 +437,6 @@
                 authSection.classList.add('hidden');
                 mainApp.classList.remove('hidden');
                 userInfoBar.classList.remove('hidden');
-                // bottomNavigation.classList.remove('hidden'); // Removed
                 logoutButton.classList.remove('hidden');
                 userEmailDisplay.textContent = user.email.split('@')[0]; 
                 fetchPosts(); 
@@ -458,10 +446,9 @@
                 authSection.classList.remove('hidden');
                 mainApp.classList.add('hidden');
                 userInfoBar.classList.add('hidden');
-                // bottomNavigation.classList.add('hidden'); // Removed
                 logoutButton.classList.add('hidden');
-                postsContainer.innerHTML = '<p class="text-center text-gray-500 py-8 text-lg italic">გთხოვთ, შეხვიდეთ სისტემაში პოსტების სანახავად.</p>';
-                myPostsContainer.innerHTML = '<p class="text-center text-gray-500 py-8 text-lg italic">თქვენი პოსტები აქ გამოჩნდება.</p>';
+                postsContainer.innerHTML = '<p class="text-center text-gray-400 py-8 text-lg italic">გთხოვთ, შეხვიდეთ სისტემაში პოსტების სანახავად.</p>';
+                myPostsContainer.innerHTML = '<p class="text-center text-gray-400 py-8 text-lg italic">თქვენი პოსტები აქ გამოჩნდება.</p>';
             }
         });
 
@@ -534,18 +521,21 @@
             // Get all buttons in the scrollable navbar and reset their styles
             const navButtons = document.querySelectorAll('#scrollable-navbar button');
             navButtons.forEach(btn => {
-                btn.classList.remove('text-indigo-600', 'bg-indigo-50');
-                btn.classList.add('text-gray-500', 'hover:bg-gray-100'); // Default inactive state
+                btn.classList.remove('text-indigo-400', 'bg-indigo-900/40'); // Adjusted for dark mode
+                btn.classList.add('text-gray-400', 'hover:bg-zinc-800'); // Default inactive state for dark mode
             });
 
             if (sectionName === 'feed') {
                 feedSection.classList.remove('hidden');
-                document.getElementById('feed-btn').classList.add('text-indigo-600', 'bg-indigo-50');
-                document.getElementById('feed-btn').classList.remove('text-gray-500', 'hover:bg-gray-100');
+                document.getElementById('feed-btn').classList.add('text-indigo-400', 'bg-indigo-900/40');
+                document.getElementById('feed-btn').classList.remove('text-gray-400', 'hover:bg-zinc-800');
             } else if (sectionName === 'profile') {
                 profileSection.classList.remove('hidden');
-                document.getElementById('profile-btn').classList.add('text-indigo-600', 'bg-indigo-50');
-                document.getElementById('profile-btn').classList.remove('text-gray-500', 'hover:bg-gray-100');
+                // Profile button is not in the HTML, so add it or remove this logic
+                // For now, assuming it will be added, or removing this specific line.
+                // If you add a profile button, make sure it has id="profile-btn"
+                // document.getElementById('profile-btn').classList.add('text-indigo-400', 'bg-indigo-900/40');
+                // document.getElementById('profile-btn').classList.remove('text-gray-400', 'hover:bg-zinc-800');
             }
             // Add more conditions here for future sections
 
@@ -734,9 +724,9 @@
             
             if (!commentsSection.classList.contains('hidden')) {
                 fetchComments(postId, document.getElementById(`comments-list-${postId}`));
-                commentsToggleBtn.classList.add('bg-blue-200');
+                commentsToggleBtn.classList.add('bg-blue-900/40'); // Dark mode active state
             } else {
-                commentsToggleBtn.classList.remove('bg-blue-200');
+                commentsToggleBtn.classList.remove('bg-blue-900/40'); // Dark mode active state
             }
         }
         
@@ -755,13 +745,13 @@
                     const timestamp = comment.createdAt ? new Date(comment.createdAt.toDate()).toLocaleString('ka-GE') : 'ახლა';
                     
                     const commentElement = document.createElement('div');
-                    commentElement.className = 'border-l-2 border-indigo-400 pl-3 py-1 mb-2 bg-gray-50 rounded-md';
+                    commentElement.className = 'border-l-2 border-indigo-600 pl-3 py-1 mb-2 bg-zinc-700 rounded-md'; // Dark mode colors
                     commentElement.innerHTML = `
-                        <div class="text-xs text-gray-500 flex items-center justify-between">
-                            <span class="font-bold text-indigo-700">${comment.userEmail.split('@')[0]}</span>
+                        <div class="text-xs text-gray-400 flex items-center justify-between">
+                            <span class="font-bold text-indigo-300">${comment.userEmail.split('@')[0]}</span>
                             <span>${timestamp}</span>
                         </div>
-                        <p class="text-sm text-gray-800">${comment.text}</p>
+                        <p class="text-sm text-gray-200">${comment.text}</p>
                     `;
                     commentsListElement.appendChild(commentElement);
                 });
@@ -779,56 +769,58 @@
                 : '';
             
             const isLiked = currentUser && post.likes.includes(currentUser.uid);
-            const likeBtnClass = isLiked ? 'text-white bg-red-600 hover:bg-red-700 active:bg-red-800' : 'text-red-600 bg-red-50 hover:bg-red-100';
+            const likeBtnClass = isLiked 
+                ? 'text-red-200 bg-red-900/40 hover:bg-red-900/60 active:bg-red-900/70' 
+                : 'text-red-400 bg-red-900/20 hover:bg-red-900/30'; // Dark mode colors
             const likeIcon = isLiked ? 'favorite' : 'favorite_border';
             const likeCount = post.likes.length || 0;
             const commentCount = post.commentsCount || 0;
             
             const deleteBtnHtml = isOwner 
-                ? `<button onclick="deletePost('${postId}')" class="flex items-center text-gray-500 hover:text-red-500 transition duration-200 text-sm ml-2 p-1 rounded-full hover:bg-red-50">
+                ? `<button onclick="deletePost('${postId}')" class="flex items-center text-gray-400 hover:text-red-400 transition duration-200 text-sm ml-2 p-1 rounded-full hover:bg-red-900/20">
                         <span class="material-icons text-xl">delete_outline</span>
                    </button>`
                 : '';
 
             const postElement = document.createElement('article');
             postElement.id = `post-${postId}`;
-            postElement.className = 'bg-white p-4 rounded-xl shadow-lg border border-gray-100 transition-all duration-300 hover:shadow-xl'; 
+            postElement.className = 'bg-zinc-800 p-4 rounded-xl shadow-lg border border-zinc-700 transition-all duration-300 hover:shadow-xl'; // Dark mode
             postElement.innerHTML = `
-                <div class="flex items-center justify-between mb-3 border-b pb-2">
+                <div class="flex items-center justify-between mb-3 border-b border-zinc-700 pb-2">
                     <div class="flex items-center">
-                        <span class="material-icons text-base mr-1 text-indigo-500">person</span>
-                        <span class="font-bold text-gray-800 mr-3">${post.userEmail.split('@')[0]}</span>
+                        <span class="material-icons text-base mr-1 text-indigo-400">person</span>
+                        <span class="font-bold text-gray-100 mr-3">${post.userEmail.split('@')[0]}</span>
                     </div>
-                    <div class="flex items-center text-sm text-gray-500">
+                    <div class="flex items-center text-sm text-gray-400">
                         <span class="material-icons text-base mr-1">schedule</span>
                         <span>${timestamp}</span>
                         ${deleteBtnHtml}
                     </div>
                 </div>
-                ${post.title ? `<h3 class="text-lg font-bold text-gray-800 mb-2">${post.title}</h3>` : ''}
-                <p class="text-gray-700 mb-4 leading-normal">${post.text}</p>
+                ${post.title ? `<h3 class="text-lg font-bold text-gray-100 mb-2">${post.title}</h3>` : ''}
+                <p class="text-gray-200 mb-4 leading-normal">${post.text}</p>
                 ${imageHtml}
                 
-                <div class="flex items-center justify-start border-t border-gray-100 pt-3 gap-4">
+                <div class="flex items-center justify-start border-t border-zinc-700 pt-3 gap-4">
                     <button onclick="toggleLike('${postId}')" class="flex items-center transition duration-200 ease-in-out font-medium px-4 py-2 rounded-full ${likeBtnClass} text-sm shadow-sm">
                         <span class="material-icons text-xl mr-1">${likeIcon}</span>
                         <span>${likeCount}</span>
                     </button>
-                    <button onclick="toggleComments('${postId}')" class="toggle-comments-btn flex items-center text-blue-600 hover:text-blue-700 transition duration-200 ease-in-out font-medium px-4 py-2 rounded-full bg-blue-50 hover:bg-blue-100 text-sm shadow-sm">
+                    <button onclick="toggleComments('${postId}')" class="toggle-comments-btn flex items-center text-blue-400 hover:text-blue-300 transition duration-200 ease-in-out font-medium px-4 py-2 rounded-full bg-blue-900/20 hover:bg-blue-900/30 text-sm shadow-sm">
                         <span class="material-icons text-xl mr-1">chat_bubble_outline</span>
                         <span>${commentCount}</span>
                     </button>
                 </div>
                 
-                <div id="comments-section-${postId}" class="mt-4 border-t border-gray-100 pt-4 hidden">
-                    <h4 class="text-base font-bold text-gray-700 mb-3 flex items-center gap-2">
-                        <span class="material-icons text-indigo-500 text-lg">comment</span> კომენტარები
+                <div id="comments-section-${postId}" class="mt-4 border-t border-zinc-700 pt-4 hidden">
+                    <h4 class="text-base font-bold text-gray-100 mb-3 flex items-center gap-2">
+                        <span class="material-icons text-indigo-400 text-lg">comment</span> კომენტარები
                     </h4>
                     <div id="comments-list-${postId}" class="space-y-2 mb-4">
                     </div>
                     <div class="flex gap-2">
-                        <input type="text" id="comment-input-${postId}" placeholder="დატოვეთ კომენტარი..." class="flex-grow px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 text-sm">
-                        <button onclick="submitComment('${postId}')" class="bg-indigo-500 text-white px-3 py-2 rounded-lg font-semibold hover:bg-indigo-600 active:bg-indigo-700 transition duration-300 text-sm flex items-center justify-center">
+                        <input type="text" id="comment-input-${postId}" placeholder="დატოვეთ კომენტარი..." class="flex-grow px-3 py-2 border border-zinc-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-zinc-700 text-gray-100 placeholder-gray-400 text-sm">
+                        <button onclick="submitComment('${postId}')" class="bg-indigo-600 text-white px-3 py-2 rounded-lg font-semibold hover:bg-indigo-700 active:bg-indigo-800 transition duration-300 text-sm flex items-center justify-center">
                             <span class="material-icons text-xl">send</span>
                         </button>
                     </div>
@@ -842,7 +834,7 @@
             onSnapshot(q, (snapshot) => {
                 postsContainer.innerHTML = ''; 
                 if (snapshot.empty) {
-                    postsContainer.innerHTML = '<p class="text-center text-gray-500 py-8 text-lg italic">პოსტები არ მოიძებნა. იყავი პირველი, ვინც გაუზიარებს აზრებს!</p>';
+                    postsContainer.innerHTML = '<p class="text-center text-gray-400 py-8 text-lg italic">პოსტები არ მოიძებნა. იყავი პირველი, ვინც გაუზიარებს აზრებს!</p>';
                     return;
                 }
                 snapshot.forEach((doc) => {
@@ -863,7 +855,7 @@
             onSnapshot(q, (snapshot) => {
                 myPostsContainer.innerHTML = '';
                 if (snapshot.empty) {
-                    myPostsContainer.innerHTML = '<p class="text-center text-gray-500 py-8 text-lg italic">ჯერ არც ერთი პოსტი არ გაქვთ. შექმენით თქვენი პირველი პოსტი!</p>';
+                    myPostsContainer.innerHTML = '<p class="text-center text-gray-400 py-8 text-lg italic">ჯერ არც ერთი პოსტი არ გაქვთ. შექმენით თქვენი პირველი პოსტი!</p>';
                     return;
                 }
                 snapshot.forEach((doc) => {
@@ -894,46 +886,32 @@
                 document.body.style.overflow = '';
             }
         }
-        // ... (არსებული გლობალური ცვლადები)
+        
+        window.openContactModal = openContactModal;
+        window.closeContactModal = closeContactModal;
+        const contactModal = document.getElementById('contact-modal');
+        
+        function openContactModal() {
+            contactModal.style.display = 'flex';
+            setTimeout(() => {
+                contactModal.classList.add('is-open');
+            }, 10); 
+            document.body.style.overflow = 'hidden'; 
+        }
 
-// ახალი გლობალური ცვლადები
-window.openContactModal = openContactModal;
-window.closeContactModal = closeContactModal;
-const contactModal = document.getElementById('contact-modal');
-const scrollableNavbar = document.getElementById('scrollable-navbar');
+        function closeContactModal() {
+            contactModal.classList.remove('is-open');
+            setTimeout(() => {
+                contactModal.style.display = 'none';
+                document.body.style.overflow = ''; 
+            }, 500); 
+        }
 
-// ... (არსებული ფუნქციები)
-
-// ----------------------------------------------------
-// კონტაქტის მოდალის ფუნქციები
-// ----------------------------------------------------
-
-function openContactModal() {
-    // ანიმაციისთვის: ჯერ display block, შემდეგ is-open კლასი
-    contactModal.style.display = 'flex';
-    // მცირე დაყოვნება, რომ ბრაუზერმა მოასწროს display ცვლილების რენდერირება 
-    setTimeout(() => {
-        contactModal.classList.add('is-open');
-    }, 10); 
-    // მოდალის გახსნისას მთავარი კონტენტის სქროლირება გათიშვა
-    document.body.style.overflow = 'hidden'; 
-}
-
-function closeContactModal() {
-    contactModal.classList.remove('is-open');
-    // display: none ანიმაციის დასრულების შემდეგ (0.5s)
-    setTimeout(() => {
-        contactModal.style.display = 'none';
-        document.body.style.overflow = ''; // სქროლის აღდგენა
-    }, 500); // დრო უნდა ემთხვეოდეს CSS-ში transition-ის დროს
-}
-
-// Escape ღილაკით დახურვა
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && contactModal.classList.contains('is-open')) {
-        closeContactModal();
-    }
-});
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && contactModal.classList.contains('is-open')) {
+                closeContactModal();
+            }
+        });
     </script>
 </body>
 </html>
