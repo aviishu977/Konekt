@@ -28,15 +28,16 @@
         }
         
         .post-image {
-            object-fit: contain;
-            height: auto;
+            object-fit: cover; 
+            max-height: 300px; 
             width: 100%;
+            border-radius: 0.75rem; 
         }
         
         .post-create-section {
             max-height: 1000px;
             opacity: 1;
-            transition: max-height 0.5s ease-in, opacity 0.5s ease-in, padding 0.5s ease-in;
+            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, padding 0.5s ease-in-out;
             padding: 1rem;
         }
         .post-create-section.hidden {
@@ -48,35 +49,22 @@
             transition: max-height 0.4s ease-out, opacity 0.4s ease-out, padding 0.4s ease-out;
         }
 
-        /* Dark mode specific adjustments for app-container */
+        /* App container for mobile-first design, centered on larger screens */
         .app-container {
             width: 100%;
-            max-width: 768px;
             margin: 0 auto;
             min-height: 100vh;
-            background-color: #1a1a1a; /* Darker background for app content */
-            box-shadow: 0 0 20px rgba(0,0,0,0.3); /* Darker shadow */
+            background-color: #1a1a1a; 
             display: flex;
             flex-direction: column;
         }
-        
-        .fab {
-            position: fixed;
-            bottom: 72px;
-            right: 1.5rem;
-            z-index: 60;
-            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
-        }
-        .fab:active {
-            transform: scale(0.95);
-        }
-        
         @media (min-width: 768px) {
-            .fab {
-                right: calc(50% - 384px + 1.5rem);
+            .app-container {
+                max-width: 768px; 
+                box-shadow: 0 0 20px rgba(0,0,0,0.3); 
             }
         }
-
+        
         .message-box {
             animation: fadeInOut 4s forwards;
         }
@@ -88,35 +76,20 @@
             100% { opacity: 0; transform: translateY(-10px); display: none; }
         }
         
-        .download-button-flex {
-            display: inline-flex;
-            align-items: center; 
-            justify-content: center; 
-        }
-
-        /* Custom CSS for hiding scrollbar in horizontal scrollable nav */
-        .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-        }
-        .scrollbar-hide {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
-        
-        /* Custom CSS for Full Screen Modal and Transition Effect */
+        /* Full Screen Modal and Transition Effect */
         .full-screen-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.95); /* Darker overlay */
+            background-color: rgba(0, 0, 0, 0.95); 
             z-index: 1000;
             overflow-y: auto;
             display: none; 
 
             transform: translateX(100%);
-            transition: transform 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53); 
+            transition: transform 0.4s cubic-bezier(0.55, 0.085, 0.68, 0.53); 
         }
 
         .full-screen-modal.is-open {
@@ -136,11 +109,11 @@
 
         .close-modal-button {
             position: fixed; 
-            top: 2rem;
-            right: 2rem;
-            background-color: #333; /* Darker button */
-            width: 48px;
-            height: 48px;
+            top: 1rem;
+            right: 1rem;
+            background-color: #333; 
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -152,7 +125,25 @@
         }
 
         .close-modal-button:hover {
-            background-color: #e53e3e; /* Red for close */
+            background-color: #e53e3e; 
+        }
+
+        /* Bottom Navigation Styling */
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-center: center;
+            flex-grow: 1;
+            height: 100%;
+            color: #a0aec0; 
+            transition: color 0.2s ease-in-out;
+        }
+        .bottom-nav-item.active {
+            color: #818cf8; 
+        }
+        .bottom-nav-item:hover {
+            color: #c3dafe; 
         }
     </style>
     
@@ -160,6 +151,7 @@
 
 <body class="bg-zinc-950 text-gray-100 antialiased min-h-screen"> 
     <div class="app-container">
+        <!-- Header -->
         <header class="sticky top-0 bg-zinc-900 p-4 border-b border-zinc-800 shadow-lg z-40">
             <div class="flex items-center justify-between">
                 <h1 class="text-2xl font-extrabold text-indigo-400 flex items-center gap-1">
@@ -167,51 +159,41 @@
                     კონეკტი
                 </h1>
                 <div class="flex items-center space-x-2">
-                   <button onclick="toggleVideoOverlay()" class="p-2 rounded-full hover:bg-zinc-800 transition duration-300 md:hidden flex items-center justify-center" id="add-to-screen-button" aria-label="APK ჩამოტვირთვა">
+                    <!-- APK Download Button -->
+                    <button onclick="toggleVideoOverlay()" class="p-2 rounded-full hover:bg-zinc-800 transition duration-300 flex items-center justify-center" id="add-to-screen-button" aria-label="APK ჩამოტვირთვა">
                         <span class="material-icons text-2xl text-indigo-400">file_download</span>
-                        <span class="ml-1 text-indigo-400 font-semibold text-sm">APK</span>
+                        <span class="ml-1 text-indigo-400 font-semibold text-sm hidden md:inline">APK</span>
                     </button>
-                    <button onclick="logoutUser()" class="p-2 rounded-full hover:bg-zinc-800 transition duration-300 hidden" id="logout-button" aria-label="გასვლა">
-                        <span class="material-icons text-2xl text-gray-400">logout</span>
-                    </button>
+                    
+                    <!-- More Menu Button -->
+                    <div class="relative">
+                        <button id="more-menu-btn" class="p-2 rounded-full hover:bg-zinc-800 transition duration-300 flex items-center justify-center" aria-label="მეტი ოფციები">
+                            <span class="material-icons text-2xl text-gray-400">more_vert</span>
+                        </button>
+                        <div id="more-menu-dropdown" class="absolute right-0 mt-2 w-48 bg-zinc-800 rounded-lg shadow-lg py-2 z-50 hidden border border-zinc-700">
+                            <a href="https://egreve.bog.ge/G10o" target="_blank" rel="noopener noreferrer" class="flex items-center px-4 py-2 text-sm text-gray-200 hover:bg-zinc-700">
+                                <span class="material-icons text-lg mr-2 text-green-400">volunteer_activism</span> დონაცია
+                            </a>
+                            <a href="mailto:geo.konekti.official@gmail.com" target="_blank" class="flex items-center px-4 py-2 text-sm text-gray-200 hover:bg-zinc-700">
+                                <span class="material-icons text-lg mr-2 text-red-400">flag</span> რეპორტი
+                            </a>
+                            <button onclick="openContactModal(); closeMoreMenu();" class="flex items-center w-full text-left px-4 py-2 text-sm text-gray-200 hover:bg-zinc-700">
+                                <span class="material-icons text-lg mr-2 text-blue-400">contact_support</span> კონტაქტი
+                            </button>
+                            <div class="border-t border-zinc-700 my-1"></div>
+                            <button onclick="logoutUser(); closeMoreMenu();" class="flex items-center w-full text-left px-4 py-2 text-sm text-gray-200 hover:bg-zinc-700" id="logout-button">
+                                <span class="material-icons text-lg mr-2 text-gray-400">logout</span> გასვლა
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="user-info-bar" class="text-sm text-gray-400 mt-2 hidden">
                 მოგესალმებით, <span id="user-email-display" class="font-bold text-indigo-400"></span>
             </div>
         </header>
-
-        <!-- New Scrollable App-Style Navbar -->
-        <nav id="scrollable-navbar" class="bg-zinc-900 px-4 py-2 border-b border-zinc-800 shadow-lg sticky top-[64px] z-30 w-full">
-            <div class="flex overflow-x-auto whitespace-nowrap scrollbar-hide space-x-3">
-                
-                <button id="feed-btn" onclick="showSection('feed')" class="flex items-center px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ease-in-out flex-shrink-0 text-indigo-400 bg-indigo-900/40">
-                    <span>პოსტები</span>
-                </button>
-                
-                <a href="https://egreve.bog.ge/G10o" 
-                   target="_blank" 
-                   rel="noopener noreferrer"
-                   class="flex items-center px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ease-in-out flex-shrink-0 text-gray-400 hover:bg-zinc-800">
-                    <span>დონაცია</span>
-                </a>
-                
-                <a href="mailto:geo.konekti.official@gmail.com" 
-                   target="_blank" 
-                   class="flex items-center px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ease-in-out flex-shrink-0 text-gray-400 hover:bg-zinc-800">
-                    <span>რეპორტი</span>
-                </a>
-                <button 
-            onclick="openContactModal()" 
-            class="flex items-center px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ease-in-out flex-shrink-0 text-gray-400 hover:bg-zinc-800"
-        >
-            <span>კონტაქტი</span>
-        </button>
-                
-            </div>
-        </nav>
         
-        <main class="flex-grow p-4 pb-20 overflow-y-auto"> 
+        <main class="flex-grow p-4 pb-16 overflow-y-auto"> 
             <div id="loading-message" class="text-center text-gray-400 my-8 flex items-center justify-center gap-2">
                 <span class="material-icons animate-spin text-xl">sync</span> იტვირთება...
             </div>
@@ -278,9 +260,23 @@
             </section>
         </main>
         
-        <button onclick="togglePostCreator()" id="toggle-post-btn" class="fab bg-indigo-600 text-white p-4 rounded-full shadow-xl hover:bg-indigo-700 active:bg-indigo-800">
-            <span class="material-icons text-2xl">add</span> 
-        </button>
+        <!-- Bottom Navigation Bar -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-zinc-900 border-t border-zinc-800 shadow-2xl z-50">
+            <div class="flex justify-around items-center h-16 max-w-md mx-auto">
+                <button id="nav-feed-btn" onclick="showSection('feed')" class="bottom-nav-item active">
+                    <span class="material-icons text-2xl">home</span>
+                    <span class="text-xs mt-1">მთავარი</span>
+                </button>
+                <button id="nav-create-btn" onclick="showSection('create')" class="bottom-nav-item">
+                    <span class="material-icons text-2xl">add_circle_outline</span>
+                    <span class="text-xs mt-1">პოსტი</span>
+                </button>
+                <button id="nav-profile-btn" onclick="showSection('profile')" class="bottom-nav-item">
+                    <span class="material-icons text-2xl">person</span>
+                    <span class="text-xs mt-1">პროფილი</span>
+                </button>
+            </div>
+        </nav>
     </div>
 
     <!-- Video Overlay -->
@@ -292,6 +288,8 @@
             თქვენი ბრაუზერი არ უჭერს მხარს ვიდეო ტეგს.
         </video>
     </div>
+
+    <!-- Contact Modal -->
     <div id="contact-modal" class="full-screen-modal">
         <div class="modal-inner-content">
             <button onclick="closeContactModal()" class="close-modal-button" aria-label="დახურვა">
@@ -354,64 +352,95 @@
         </div>
     </div>
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, updateDoc, arrayUnion, arrayRemove, where, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+   // Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+// დამატებითი იმპორტები, რომლებიც გჭირდებათ
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, updateDoc, arrayUnion, arrayRemove, where, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyC8_CxoK5WLEHdeXV8JQgXZlkhkPeMcvnw",
-            authDomain: "socia-a13b5.firebaseapp.com",
-            projectId: "socia-a13b5",
-            storageBucket: "socia-a13b5.firebasestorage.app",
-            messagingSenderId: "712093587058",
-            appId: "1:712093587058:web:7cc5a06dcb1731a8cd54eb",
-            measurementId: "G-85BBHH9ZCF"
-        };
+// Your web app's Firebase configuration - **დაბრუნებული ძველი კონფიგურაცია**
+const firebaseConfig = {
+    apiKey: "AIzaSyC8_CxoK5WLEHdeXV8JQgXZlkhkPeMcvnw",
+    authDomain: "socia-a13b5.firebaseapp.com",
+    projectId: "socia-a13b5",
+    storageBucket: "socia-a13b5.firebasestorage.app",
+    messagingSenderId: "712093587058",
+    appId: "1:712093587058:web:7cc5a06dcb1731a8cd54eb",
+    measurementId: "G-85BBHH9ZCF"
+};
 
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app); 
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app); 
 
-        window.registerUser = registerUser;
-        window.loginUser = loginUser;
-        window.logoutUser = logoutUser;
-        window.createPost = createPost;
-        window.toggleLike = toggleLike;
-        window.showSection = showSection; 
-        window.togglePostCreator = togglePostCreator; 
-        window.deletePost = deletePost; 
-        window.submitComment = submitComment; 
-        window.toggleComments = toggleComments; 
-        window.toggleVideoOverlay = toggleVideoOverlay; 
-        
-        const loadingMessage = document.getElementById('loading-message');
-        const authSection = document.getElementById('auth-section');
-        const mainApp = document.getElementById('main-app');
-        const userEmailDisplay = document.getElementById('user-email-display');
-        const postsContainer = document.getElementById('posts-container');
-        const myPostsContainer = document.getElementById('my-posts-container');
-        const errorDisplay = document.getElementById('error-display');
-        const errorText = document.getElementById('error-text');
-        const postCreatorSection = document.getElementById('post-creator-section');
-        const feedSection = document.getElementById('feed-section');
-        const profileSection = document.getElementById('profile-section');
-        const feedBtn = document.getElementById('feed-btn'); // Get the button from the new navbar
-        const togglePostBtn = document.getElementById('toggle-post-btn');
-        const userInfoBar = document.getElementById('user-info-bar'); 
-        const logoutButton = document.getElementById('logout-button');
-        const videoOverlay = document.getElementById('video-overlay'); 
-        const fullscreenVideo = document.getElementById('fullscreen-video'); 
+// დანარჩენი ინიციალიზაცია
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-        let currentUser = null; 
-        let currentSection = 'feed';
+window.registerUser = registerUser;
+window.loginUser = loginUser;
+window.logoutUser = logoutUser;
+window.createPost = createPost;
+window.toggleLike = toggleLike;
+window.showSection = showSection; 
+window.deletePost = deletePost; 
+window.submitComment = submitComment; 
+window.toggleComments = toggleComments; 
+window.toggleVideoOverlay = toggleVideoOverlay; 
+window.openContactModal = openContactModal;
+window.closeContactModal = closeContactModal;
+window.closeMoreMenu = closeMoreMenu;
+
+const loadingMessage = document.getElementById('loading-message');
+const authSection = document.getElementById('auth-section');
+const mainApp = document.getElementById('main-app');
+const userEmailDisplay = document.getElementById('user-email-display');
+const postsContainer = document.getElementById('posts-container');
+const myPostsContainer = document.getElementById('my-posts-container');
+const errorDisplay = document.getElementById('error-display');
+const errorText = document.getElementById('error-text');
+const postCreatorSection = document.getElementById('post-creator-section');
+const feedSection = document.getElementById('feed-section');
+const profileSection = document.getElementById('profile-section');
+const userInfoBar = document.getElementById('user-info-bar'); 
+const logoutButton = document.getElementById('logout-button'); 
+const videoOverlay = document.getElementById('video-overlay'); 
+const fullscreenVideo = document.getElementById('fullscreen-video'); 
+const contactModal = document.getElementById('contact-modal');
+
+const navFeedBtn = document.getElementById('nav-feed-btn');
+const navCreateBtn = document.getElementById('nav-create-btn');
+const navProfileBtn = document.getElementById('nav-profile-btn');
+
+const moreMenuBtn = document.getElementById('more-menu-btn');
+const moreMenuDropdown = document.getElementById('more-menu-dropdown');
+
+let currentUser = null; 
+let currentSection = 'feed';
 
         postCreatorSection.classList.add('hidden'); 
 
+        // Toggle More Menu Dropdown
+        moreMenuBtn.addEventListener('click', () => {
+            moreMenuDropdown.classList.toggle('hidden');
+        });
+
+        function closeMoreMenu() {
+            moreMenuDropdown.classList.add('hidden');
+        }
+
+        // Close dropdown if clicked outside
+        document.addEventListener('click', (event) => {
+            if (!moreMenuBtn.contains(event.target) && !moreMenuDropdown.contains(event.target)) {
+                closeMoreMenu();
+            }
+        });
+
+
         function displayMessage(message, type = 'success') {
             errorText.textContent = message;
-            errorDisplay.classList.remove('hidden', 'bg-red-900/30', 'border-red-700', 'text-red-300', 'bg-green-900/30', 'border-green-700', 'text-green-300'); // Adjust classes for dark mode
+            errorDisplay.classList.remove('hidden', 'bg-red-900/30', 'border-red-700', 'text-red-300', 'bg-green-900/30', 'border-green-700', 'text-green-300');
             errorDisplay.classList.remove('message-box');
 
             if (type === 'error') {
@@ -431,13 +460,13 @@
         onAuthStateChanged(auth, (user) => {
             loadingMessage.style.display = 'none';
             currentUser = user;
-            displayMessage('', 'success');
+            displayMessage('', 'success'); 
             
             if (user) {
                 authSection.classList.add('hidden');
                 mainApp.classList.remove('hidden');
                 userInfoBar.classList.remove('hidden');
-                logoutButton.classList.remove('hidden');
+                logoutButton.classList.remove('hidden'); 
                 userEmailDisplay.textContent = user.email.split('@')[0]; 
                 fetchPosts(); 
                 fetchMyPosts(); 
@@ -446,7 +475,7 @@
                 authSection.classList.remove('hidden');
                 mainApp.classList.add('hidden');
                 userInfoBar.classList.add('hidden');
-                logoutButton.classList.add('hidden');
+                logoutButton.classList.add('hidden'); 
                 postsContainer.innerHTML = '<p class="text-center text-gray-400 py-8 text-lg italic">გთხოვთ, შეხვიდეთ სისტემაში პოსტების სანახავად.</p>';
                 myPostsContainer.innerHTML = '<p class="text-center text-gray-400 py-8 text-lg italic">თქვენი პოსტები აქ გამოჩნდება.</p>';
             }
@@ -517,49 +546,22 @@
             currentSection = sectionName;
             feedSection.classList.add('hidden');
             profileSection.classList.add('hidden');
+            postCreatorSection.classList.add('hidden'); 
             
-            // Get all buttons in the scrollable navbar and reset their styles
-            const navButtons = document.querySelectorAll('#scrollable-navbar button');
-            navButtons.forEach(btn => {
-                btn.classList.remove('text-indigo-400', 'bg-indigo-900/40'); // Adjusted for dark mode
-                btn.classList.add('text-gray-400', 'hover:bg-zinc-800'); // Default inactive state for dark mode
-            });
+            navFeedBtn.classList.remove('active');
+            navCreateBtn.classList.remove('active');
+            navProfileBtn.classList.remove('active');
 
             if (sectionName === 'feed') {
                 feedSection.classList.remove('hidden');
-                document.getElementById('feed-btn').classList.add('text-indigo-400', 'bg-indigo-900/40');
-                document.getElementById('feed-btn').classList.remove('text-gray-400', 'hover:bg-zinc-800');
+                navFeedBtn.classList.add('active');
             } else if (sectionName === 'profile') {
                 profileSection.classList.remove('hidden');
-                // Profile button is not in the HTML, so add it or remove this logic
-                // For now, assuming it will be added, or removing this specific line.
-                // If you add a profile button, make sure it has id="profile-btn"
-                // document.getElementById('profile-btn').classList.add('text-indigo-400', 'bg-indigo-900/40');
-                // document.getElementById('profile-btn').classList.remove('text-gray-400', 'hover:bg-zinc-800');
-            }
-            // Add more conditions here for future sections
-
-            if (!postCreatorSection.classList.contains('hidden')) {
-                togglePostCreator(); 
-            }
-        }
-        
-        function togglePostCreator() {
-            postCreatorSection.classList.toggle('hidden');
-            
-            const icon = togglePostBtn.querySelector('.material-icons');
-            
-            if (postCreatorSection.classList.contains('hidden')) {
-                icon.textContent = 'add';
-                togglePostBtn.classList.remove('bg-red-500', 'hover:bg-red-600', 'active:bg-red-700'); 
-                togglePostBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700', 'active:bg-indigo-800');
-            } else {
-                icon.textContent = 'close';
-                togglePostBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700', 'active:bg-indigo-800');
-                togglePostBtn.classList.add('bg-red-500', 'hover:bg-red-600', 'active:bg-red-700'); 
-            }
-            
-            if (!postCreatorSection.classList.contains('hidden')) {
+                navProfileBtn.classList.add('active');
+                fetchMyPosts(); 
+            } else if (sectionName === 'create') {
+                postCreatorSection.classList.remove('hidden');
+                navCreateBtn.classList.add('active');
                 document.getElementById('post-creator-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
@@ -592,7 +594,7 @@
             let base64Image = null;
 
             if (imageFile) {
-                if (imageFile.size > 3000000) {
+                if (imageFile.size > 3000000) { 
                     displayMessage("ფოტო ძალიან დიდია (მაქსიმუმ 3MB). გთხოვთ, აირჩიოთ უფრო პატარა ფოტო.", "error");
                     return;
                 }
@@ -621,7 +623,7 @@
                 document.getElementById('post-text').value = '';
                 imageInput.value = '';
                 displayMessage("პოსტი წარმატებით გამოქვეყნდა!");
-                togglePostCreator();
+                showSection('feed'); 
                 
             } catch (error) {
                 console.error("პოსტის შექმნის შეცდომა: ", error);
@@ -724,9 +726,9 @@
             
             if (!commentsSection.classList.contains('hidden')) {
                 fetchComments(postId, document.getElementById(`comments-list-${postId}`));
-                commentsToggleBtn.classList.add('bg-blue-900/40'); // Dark mode active state
+                commentsToggleBtn.classList.add('bg-blue-900/40');
             } else {
-                commentsToggleBtn.classList.remove('bg-blue-900/40'); // Dark mode active state
+                commentsToggleBtn.classList.remove('bg-blue-900/40');
             }
         }
         
@@ -745,7 +747,7 @@
                     const timestamp = comment.createdAt ? new Date(comment.createdAt.toDate()).toLocaleString('ka-GE') : 'ახლა';
                     
                     const commentElement = document.createElement('div');
-                    commentElement.className = 'border-l-2 border-indigo-600 pl-3 py-1 mb-2 bg-zinc-700 rounded-md'; // Dark mode colors
+                    commentElement.className = 'border-l-2 border-indigo-600 pl-3 py-1 mb-2 bg-zinc-700 rounded-md';
                     commentElement.innerHTML = `
                         <div class="text-xs text-gray-400 flex items-center justify-between">
                             <span class="font-bold text-indigo-300">${comment.userEmail.split('@')[0]}</span>
@@ -765,13 +767,13 @@
             const postId = doc.id;
             const timestamp = post.createdAt ? new Date(post.createdAt.toDate()).toLocaleString('ka-GE') : 'ახლა';
             const imageHtml = post.imageUrl 
-                ? `<img src="${post.imageUrl}" alt="${post.title || 'პოსტის ფოტო'}" class="post-image w-full rounded-xl mb-4 shadow-md object-cover">`
+                ? `<img src="${post.imageUrl}" alt="${post.title || 'პოსტის ფოტო'}" class="post-image mb-4 shadow-md">`
                 : '';
             
             const isLiked = currentUser && post.likes.includes(currentUser.uid);
             const likeBtnClass = isLiked 
                 ? 'text-red-200 bg-red-900/40 hover:bg-red-900/60 active:bg-red-900/70' 
-                : 'text-red-400 bg-red-900/20 hover:bg-red-900/30'; // Dark mode colors
+                : 'text-red-400 bg-red-900/20 hover:bg-red-900/30';
             const likeIcon = isLiked ? 'favorite' : 'favorite_border';
             const likeCount = post.likes.length || 0;
             const commentCount = post.commentsCount || 0;
@@ -784,7 +786,7 @@
 
             const postElement = document.createElement('article');
             postElement.id = `post-${postId}`;
-            postElement.className = 'bg-zinc-800 p-4 rounded-xl shadow-lg border border-zinc-700 transition-all duration-300 hover:shadow-xl'; // Dark mode
+            postElement.className = 'bg-zinc-800 p-4 rounded-xl shadow-lg border border-zinc-700 transition-all duration-300 hover:shadow-xl';
             postElement.innerHTML = `
                 <div class="flex items-center justify-between mb-3 border-b border-zinc-700 pb-2">
                     <div class="flex items-center">
@@ -849,7 +851,10 @@
         }
         
         function fetchMyPosts() {
-            if (!currentUser) return;
+            if (!currentUser) {
+                myPostsContainer.innerHTML = '<p class="text-center text-gray-400 py-8 text-lg italic">გთხოვთ, შეხვიდეთ სისტემაში თქვენი პოსტების სანახავად.</p>';
+                return;
+            }
             const q = query(collection(db, "posts"), where("userId", "==", currentUser.uid), orderBy("createdAt", "desc"));
 
             onSnapshot(q, (snapshot) => {
@@ -887,10 +892,6 @@
             }
         }
         
-        window.openContactModal = openContactModal;
-        window.closeContactModal = closeContactModal;
-        const contactModal = document.getElementById('contact-modal');
-        
         function openContactModal() {
             contactModal.style.display = 'flex';
             setTimeout(() => {
@@ -904,12 +905,18 @@
             setTimeout(() => {
                 contactModal.style.display = 'none';
                 document.body.style.overflow = ''; 
-            }, 500); 
+            }, 400); 
         }
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && contactModal.classList.contains('is-open')) {
                 closeContactModal();
+            }
+            if (e.key === 'Escape' && videoOverlay.classList.contains('hidden') === false) {
+                toggleVideoOverlay();
+            }
+            if (e.key === 'Escape' && moreMenuDropdown.classList.contains('hidden') === false) {
+                closeMoreMenu();
             }
         });
     </script>
